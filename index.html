@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>PI Web Api Project</title>
+    <link href="Content/app.css" rel="stylesheet" />
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="authentication">
+        <h3>PI Web Api App</h3>
+        <div class="form-group">
+            <label for="username">User Name</label>
+            <input type="text" class="form-control" id="username" placeholder="User Name" />
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" placeholder="Password" />
+        </div>
+        <button type="button" id="authenticate" class="btn btn-default">Submit</button>
+    </div>
+    <div id="piapp" style="display:none;">
+        <button type="button" id="back-button">Back to login</button>
+        <div id="findHottest">
+            <div class="form-group">
+                <label for="afServer">AF Server</label>
+                <input type="text" class="form-control" id="afServer" placeholder="Enter the AF Server" />
+                <label for="afDatabase">AF Database</label>
+                <input type="text" class="form-control" id="afDatabase" placeholder="Enter the AF Database" />
+                <label for="etemplate">Element Template</label>
+                <input type="text" class="form-control" id="etemplate" placeholder="Enter the element template name" />
+
+                <button type="button" id="getHottest" class="btn btn-default">Find Hottest Tempature</button>
+            </div>
+            <div id="result"></div>
+        </div>
+    </div>
+    <script src="Scripts/jquery-3.3.1.js"></script>
+    <script src="Scripts/piwebapi_wrapper.js"></script>
+    <script src="Scripts/app.js"></script>
+</body>
+</html>
