@@ -61,6 +61,9 @@
         GetAttributeValue: function (attributetWebId, successCallBack, errorCallBack) {
             return processJsonContent(basePIWebAPIUrl + '/streams/' + attributetWebId + '/value', 'GET', null, successCallBack, errorCallBack, false);
         },
+        GetAttributeTimeValues: function (attributetWebId, start, stop, successCallBack, errorCallBack) {
+            return processJsonContent(basePIWebAPIUrl + '/streams/' + attributetWebId + '/recorded?starttime='+start+'&endtime='+stop, 'GET', null, successCallBack, errorCallBack, false);
+        },
         GetElement: function (elementWebId, successCallBack, errorCallBack) {
             return processJsonContent(basePIWebAPIUrl + '/elements/' + elementWebId, 'GET', null, successCallBack, errorCallBack, false);
         },

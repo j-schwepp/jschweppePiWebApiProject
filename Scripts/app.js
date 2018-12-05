@@ -39,7 +39,9 @@ $("#back-button").click(function () {
 //button handler to retrieve hottest element
 $('#getHottest').click(function () {
     var max = 0;
-    var maxElement = '';
+    var maxElement;
+    var maxUom;
+    var maxTime;
     function listAttributes(data, parentWebId) {
         
         var FoundAverageTemp = false;
@@ -48,14 +50,20 @@ $('#getHottest').click(function () {
             if (Object.values(item).includes("AverageTemp")) {
                 //The element has the AverageTemp attribut
                 FoundAverageTemp = true;
-                $.when(piwebapi.GetAttributeValue(item.WebId, function (data) { return data }, function () { console.log('attributes failed') })).done(function (data) {
+                var startTime = $('#start').val();
+                var stopTime = $('#stop').val();
+                $.when(piwebapi.GetAttributeTimeValues(item.WebId, startTime, stopTime,  function (data) { return data }, function () { console.log('attributes failed') })).done(function (data) {
+                    console.log(data);
+                    $.each(data.Items, function (i, item) {
+                        ////check to see if this attribute is more than previous max if it is set it as the new max
+                        if (item.Value > max) {
+                            max = item.Value;
+                            maxElement = parentWebId;
+                            maxTime = item.Timestamp;
+                            maxUom = item.UnitsAbbreviation;
 
-                    //check to see if this attribute is more than previous max if it is set it as the new max
-                    if (data.Value > max) {
-                        max = data.Value;
-                        maxElement = parentWebId;
-
-                    }
+                        }
+                    })
 
                 });
             }
@@ -84,7 +92,7 @@ $('#getHottest').click(function () {
         })).then(function () {
             piwebapi.GetElement(maxElement, function (data) {
                 //Max values were found notify the user
-                $('#result').html('The hottest ' + $('#etemplate').val() + ' is named ' + data.Name + ' with a temparture of ' + max + '.');
+                $('#result').html('The hottest ' + $('#etemplate').val() + ' is named ' + data.Name + ' with a temparture of ' + max + maxUom + ' at ' +maxTime + '.');
 
                 piwebapi.GetElementAttributes(data.WebId, function (data) {
                     $.each(data.Items, function (i, item) {
